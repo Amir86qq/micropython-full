@@ -134,17 +134,21 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SDRAM_STARTUP_TEST       (0)
 #define MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR (true)
 
+
 // Timing configuration for 200MHz/2=100MHz (10ns)
-#define MICROPY_HW_SDRAM_CLOCK_PERIOD       2
-#define MICROPY_HW_SDRAM_CAS_LATENCY        2
-#define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (100000)
-#define MICROPY_HW_SDRAM_TIMING_TMRD        (2)
-#define MICROPY_HW_SDRAM_TIMING_TXSR        (7)
-#define MICROPY_HW_SDRAM_TIMING_TRAS        (5)
-#define MICROPY_HW_SDRAM_TIMING_TRC         (6)
-#define MICROPY_HW_SDRAM_TIMING_TWR         (3)
-#define MICROPY_HW_SDRAM_TIMING_TRP         (2)
-#define MICROPY_HW_SDRAM_TIMING_TRCD        (2)
+// ⚠️ حداکثر حالت شل (Maximum Relaxation) برای تست سخت‌افزار
+#define MICROPY_HW_SDRAM_CLOCK_PERIOD       3     // سقف مجاز: 3 (کلاک SDRAM را به 66MHz کاهش می‌دهد)
+#define MICROPY_HW_SDRAM_CAS_LATENCY        3     // سقف مجاز: 3 (تاخیر کلاک خواندن را بیشتر می‌کند)
+#define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (66666) // فرکانس واقعی با تقسیم بر 3 (66.6 مگاهرتز)
+
+// تمام این مقادیر حداکثر مجازشان در STM32H7 عدد 16 است
+#define MICROPY_HW_SDRAM_TIMING_TMRD        (16)  // حداکثر مجاز: 16
+#define MICROPY_HW_SDRAM_TIMING_TXSR        (16)  // حداکثر مجاز: 16
+#define MICROPY_HW_SDRAM_TIMING_TRAS        (16)  // حداکثر مجاز: 16
+#define MICROPY_HW_SDRAM_TIMING_TRC         (16)  // حداکثر مجاز: 16
+#define MICROPY_HW_SDRAM_TIMING_TWR         (16)  // حداکثر مجاز: 16
+#define MICROPY_HW_SDRAM_TIMING_TRP         (16)  // حداکثر مجاز: 16
+#define MICROPY_HW_SDRAM_TIMING_TRCD        (16)  // حداکثر مجاز: 16
 
 // SDRAM 16-bit
 #define MICROPY_HW_SDRAM_ROW_BITS_NUM       13
