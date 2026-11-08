@@ -2,7 +2,7 @@
  * This file is part of the MicroPython project, http://micropython.org/
  * The MIT License (MIT)
  * Copyright (C) 2013-2025 OpenMV, LLC.
-
+ */
 
 #define MICROPY_HW_BOARD_NAME       "OPENMV4P"
 #define MICROPY_HW_MCU_NAME         "STM32H743"
@@ -50,31 +50,31 @@ void board_low_power(int mode);
 #define MICROPY_BOARD_ENTER_STOP    board_low_power(1);
 #define MICROPY_BOARD_ENTER_STANDBY board_low_power(2);
 
-// 
+
 #define MICROPY_HW_CLK_PLLM         (5)
 #define MICROPY_HW_CLK_PLLN         (192)
 #define MICROPY_HW_CLK_PLLP         (2)
 #define MICROPY_HW_CLK_PLLQ         (20)
 #define MICROPY_HW_CLK_PLLR         (2)
 
-// 
+// UART1 config (PB14 و PB15)
 #define MICROPY_HW_UART1_TX  (pin_B14)
 #define MICROPY_HW_UART1_RX  (pin_B15)
 
-// UART2 config 
+// UART2 config (PA2 و PA3)
 #define MICROPY_HW_UART2_TX  (pin_A2)
 #define MICROPY_HW_UART2_RX  (pin_A3)
 
-// I2C buses 
-// I2C1 
+// I2C buses
+// I2C1 (PB6 و PB7)
 #define MICROPY_HW_I2C1_SCL (pin_B6)
 #define MICROPY_HW_I2C1_SDA (pin_B7)
 
-// I2C2 (PB10 و PB11)
+// I2C2 (PH4 و PH5)
 #define MICROPY_HW_I2C2_SCL (pin_H4)
 #define MICROPY_HW_I2C2_SDA (pin_H5)
 
-// SPI buses (SPI3)
+// SPI buses (SPI3 برای کارت SD)
 #define MICROPY_HW_SPI3_NSS  (pin_I2)
 #define MICROPY_HW_SPI3_SCK  (pin_B3)
 #define MICROPY_HW_SPI3_MISO (pin_B4)
@@ -84,13 +84,14 @@ void board_low_power(int mode);
 #define MICROPY_HW_USB_FS                   (1)
 #define MICROPY_HW_USB_CDC_RX_DATA_SIZE     (512)
 #define MICROPY_HW_USB_CDC_TX_DATA_SIZE     (512)
-#define MICROPY_HW_USB_VBUS_DETECT_PIN      (pin_A9)
+// 
 
-// LEDs 
-#define MICROPY_HW_LED1             (pin_E0) // Red
-#define MICROPY_HW_LED2             (pin_E1) // Green
-#define MICROPY_HW_LED3             (pin_I4) // Blue
-#define MICROPY_HW_LED4             (pin_I5) // IR
+
+
+#define MICROPY_HW_LED1             (pin_G13) // Red
+#define MICROPY_HW_LED2             (pin_B8)  // Green
+#define MICROPY_HW_LED3             (pin_I8)  // Blue
+#define MICROPY_HW_LED4             (pin_I4)  // IR
 #define MICROPY_HW_LED_OTYPE        (GPIO_MODE_OUTPUT_PP)
 #define MICROPY_HW_LED_ON(pin)      (mp_hal_pin_write((pin), ((pin) == MICROPY_HW_LED4)))
 #define MICROPY_HW_LED_OFF(pin)     (mp_hal_pin_write((pin), ((pin) != MICROPY_HW_LED4)))
@@ -110,9 +111,8 @@ extern const struct _mp_obj_type_t mod_network_nic_type_winc;
 #endif
 
 // QSPI Flash 256MBits (W25Q256)
-#define MICROPY_HW_QSPI_PRESCALER           (2) // F_CLK = F_AHB/2 (100MHz)
+#define MICROPY_HW_QSPI_PRESCALER           (2)
 #define MICROPY_HW_QSPIFLASH_SIZE_BITS_LOG2 (28)
-// Reserve 8MiB for romfs (192Mbit usable for FS)
 #define MICROPY_HW_SPIFLASH_SIZE_BITS       (192 * 1024 * 1024)
 #define MICROPY_HW_QSPIFLASH_CS             (pyb_pin_QSPIFLASH_CS)
 #define MICROPY_HW_QSPIFLASH_SCK            (pyb_pin_QSPIFLASH_SCK)
@@ -137,7 +137,7 @@ extern struct _spi_bdev_t spi_bdev;
 // Timing configuration for 200MHz/2=100MHz (10ns)
 #define MICROPY_HW_SDRAM_CLOCK_PERIOD       2
 #define MICROPY_HW_SDRAM_CAS_LATENCY        2
-#define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (100000) // 100 MHz
+#define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (100000)
 #define MICROPY_HW_SDRAM_TIMING_TMRD        (2)
 #define MICROPY_HW_SDRAM_TIMING_TXSR        (7)
 #define MICROPY_HW_SDRAM_TIMING_TRAS        (5)
@@ -146,7 +146,7 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SDRAM_TIMING_TRP         (2)
 #define MICROPY_HW_SDRAM_TIMING_TRCD        (2)
 
-// sdram
+// SDRAM 16-bit
 #define MICROPY_HW_SDRAM_ROW_BITS_NUM       13
 #define MICROPY_HW_SDRAM_MEM_BUS_WIDTH      16
 #define MICROPY_HW_SDRAM_REFRESH_CYCLES     8192
@@ -161,7 +161,7 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SDRAM_BURST_LENGTH       1
 #define MICROPY_HW_SDRAM_REFRESH_RATE       (64) // ms
 
-// 
+// FMC Pins (دقیقا مطابق شماتیک)
 #define MICROPY_HW_FMC_SDCKE0   (pin_C3)
 #define MICROPY_HW_FMC_SDNE0    (pin_C2)
 #define MICROPY_HW_FMC_SDNWE    (pin_C0)
