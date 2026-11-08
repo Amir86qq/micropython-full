@@ -161,7 +161,7 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SDRAM_BURST_LENGTH       1
 #define MICROPY_HW_SDRAM_REFRESH_RATE       (64) // ms
 
-// FMC Pins (دقیقا مطابق شماتیک)
+// FMC Pins 
 #define MICROPY_HW_FMC_SDCKE0   (pin_C3)
 #define MICROPY_HW_FMC_SDNE0    (pin_C2)
 #define MICROPY_HW_FMC_SDNWE    (pin_C0)
