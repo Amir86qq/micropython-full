@@ -2,7 +2,7 @@
  * This file is part of the MicroPython project, http://micropython.org/
  * The MIT License (MIT)
  * Copyright (C) 2013-2025 OpenMV, LLC.
- */
+
 
 #define MICROPY_HW_BOARD_NAME       "OPENMV4P"
 #define MICROPY_HW_MCU_NAME         "STM32H743"
@@ -50,46 +50,35 @@ void board_low_power(int mode);
 #define MICROPY_BOARD_ENTER_STOP    board_low_power(1);
 #define MICROPY_BOARD_ENTER_STANDBY board_low_power(2);
 
-// Note these are not used in top system.c.
-#define MICROPY_HW_CLK_PLLM         (3)
-#define MICROPY_HW_CLK_PLLN         (200)
+// 
+#define MICROPY_HW_CLK_PLLM         (5)
+#define MICROPY_HW_CLK_PLLN         (192)
 #define MICROPY_HW_CLK_PLLP         (2)
-#define MICROPY_HW_CLK_PLLQ         (8)
+#define MICROPY_HW_CLK_PLLQ         (20)
 #define MICROPY_HW_CLK_PLLR         (2)
 
-// UART1 config
+// 
 #define MICROPY_HW_UART1_TX  (pin_B14)
 #define MICROPY_HW_UART1_RX  (pin_B15)
 
-// UART3 config
-#define MICROPY_HW_UART3_TX  (pin_B10)
-#define MICROPY_HW_UART3_RX  (pin_B11)
-#define MICROPY_HW_UART3_RTS (pin_B14)
-#define MICROPY_HW_UART3_CTS (pin_B13)
+// UART2 config 
+#define MICROPY_HW_UART2_TX  (pin_A2)
+#define MICROPY_HW_UART2_RX  (pin_A3)
 
-// I2C buses
-#define MICROPY_HW_I2C2_SCL (pin_B10)
-#define MICROPY_HW_I2C2_SDA (pin_B11)
+// I2C buses 
+// I2C1 
+#define MICROPY_HW_I2C1_SCL (pin_B6)
+#define MICROPY_HW_I2C1_SDA (pin_B7)
 
-#define MICROPY_HW_I2C4_SCL (pin_D12)
-#define MICROPY_HW_I2C4_SDA (pin_D13)
+// I2C2 (PB10 و PB11)
+#define MICROPY_HW_I2C2_SCL (pin_H4)
+#define MICROPY_HW_I2C2_SDA (pin_H5)
 
-// SPI buses
-#define MICROPY_HW_SPI2_NSS  (pin_B12)
-#define MICROPY_HW_SPI2_SCK  (pin_B13)
-#define MICROPY_HW_SPI2_MISO (pin_B14)
-#define MICROPY_HW_SPI2_MOSI (pin_B15)
-
-// FDCAN bus
-#define MICROPY_HW_CAN2_NAME "FDCAN2"
-#define MICROPY_HW_CAN2_TX   (pin_B13)
-#define MICROPY_HW_CAN2_RX   (pin_B12)
-#define MICROPY_HW_CAN_IS_RESERVED(id) (id != PYB_CAN_2)
-
-// SD card detect switch
-#define MICROPY_HW_SDCARD_DETECT_PIN        (pin_G7)
-#define MICROPY_HW_SDCARD_DETECT_PULL       (GPIO_PULLUP)
-#define MICROPY_HW_SDCARD_DETECT_PRESENT    (GPIO_PIN_RESET)
+// SPI buses (SPI3)
+#define MICROPY_HW_SPI3_NSS  (pin_I2)
+#define MICROPY_HW_SPI3_SCK  (pin_B3)
+#define MICROPY_HW_SPI3_MISO (pin_B4)
+#define MICROPY_HW_SPI3_MOSI (pin_B5)
 
 // USB config
 #define MICROPY_HW_USB_FS                   (1)
@@ -97,11 +86,11 @@ void board_low_power(int mode);
 #define MICROPY_HW_USB_CDC_TX_DATA_SIZE     (512)
 #define MICROPY_HW_USB_VBUS_DETECT_PIN      (pin_A9)
 
-// LEDs
-#define MICROPY_HW_LED1             (pin_C0) // red
-#define MICROPY_HW_LED2             (pin_C1) // green
-#define MICROPY_HW_LED3             (pin_C2) // blue
-#define MICROPY_HW_LED4             (pin_E2) // IR
+// LEDs 
+#define MICROPY_HW_LED1             (pin_E0) // Red
+#define MICROPY_HW_LED2             (pin_E1) // Green
+#define MICROPY_HW_LED3             (pin_I4) // Blue
+#define MICROPY_HW_LED4             (pin_I5) // IR
 #define MICROPY_HW_LED_OTYPE        (GPIO_MODE_OUTPUT_PP)
 #define MICROPY_HW_LED_ON(pin)      (mp_hal_pin_write((pin), ((pin) == MICROPY_HW_LED4)))
 #define MICROPY_HW_LED_OFF(pin)     (mp_hal_pin_write((pin), ((pin) != MICROPY_HW_LED4)))
@@ -120,10 +109,10 @@ extern const struct _mp_obj_type_t mod_network_nic_type_winc;
 #define MICROPY_BOARD_NETWORK_INTERFACES
 #endif
 
-// QSPI Flash 256MBits
+// QSPI Flash 256MBits (W25Q256)
 #define MICROPY_HW_QSPI_PRESCALER           (2) // F_CLK = F_AHB/2 (100MHz)
 #define MICROPY_HW_QSPIFLASH_SIZE_BITS_LOG2 (28)
-// Reserve 8MiB for romfs
+// Reserve 8MiB for romfs (192Mbit usable for FS)
 #define MICROPY_HW_SPIFLASH_SIZE_BITS       (192 * 1024 * 1024)
 #define MICROPY_HW_QSPIFLASH_CS             (pyb_pin_QSPIFLASH_CS)
 #define MICROPY_HW_QSPIFLASH_SCK            (pyb_pin_QSPIFLASH_SCK)
@@ -157,15 +146,10 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SDRAM_TIMING_TRP         (2)
 #define MICROPY_HW_SDRAM_TIMING_TRCD        (2)
 
-// 16-bit SDRAM
-//#define MICROPY_HW_SDRAM_ROW_BITS_NUM       13
-//#define MICROPY_HW_SDRAM_MEM_BUS_WIDTH      16
-//#define MICROPY_HW_SDRAM_REFRESH_CYCLES     8192
-
-// 32-bit SDRAM
-#define MICROPY_HW_SDRAM_ROW_BITS_NUM       12
-#define MICROPY_HW_SDRAM_MEM_BUS_WIDTH      32
-#define MICROPY_HW_SDRAM_REFRESH_CYCLES     4096
+// sdram
+#define MICROPY_HW_SDRAM_ROW_BITS_NUM       13
+#define MICROPY_HW_SDRAM_MEM_BUS_WIDTH      16
+#define MICROPY_HW_SDRAM_REFRESH_CYCLES     8192
 
 #define MICROPY_HW_SDRAM_COLUMN_BITS_NUM    9
 #define MICROPY_HW_SDRAM_INTERN_BANKS_NUM   4
@@ -177,18 +161,17 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SDRAM_BURST_LENGTH       1
 #define MICROPY_HW_SDRAM_REFRESH_RATE       (64) // ms
 
-#define MICROPY_HW_FMC_SDCKE0   (pin_C5)
-#define MICROPY_HW_FMC_SDNE0    (pin_C4)
+// 
+#define MICROPY_HW_FMC_SDCKE0   (pin_C3)
+#define MICROPY_HW_FMC_SDNE0    (pin_C2)
+#define MICROPY_HW_FMC_SDNWE    (pin_C0)
 #define MICROPY_HW_FMC_SDCLK    (pin_G8)
 #define MICROPY_HW_FMC_SDNCAS   (pin_G15)
 #define MICROPY_HW_FMC_SDNRAS   (pin_F11)
-#define MICROPY_HW_FMC_SDNWE    (pin_A7)
 #define MICROPY_HW_FMC_BA0      (pin_G4)
 #define MICROPY_HW_FMC_BA1      (pin_G5)
 #define MICROPY_HW_FMC_NBL0     (pin_E0)
 #define MICROPY_HW_FMC_NBL1     (pin_E1)
-#define MICROPY_HW_FMC_NBL2     (pin_I4)
-#define MICROPY_HW_FMC_NBL3     (pin_I5)
 #define MICROPY_HW_FMC_A0       (pin_F0)
 #define MICROPY_HW_FMC_A1       (pin_F1)
 #define MICROPY_HW_FMC_A2       (pin_F2)
@@ -218,22 +201,10 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_FMC_D13      (pin_D8)
 #define MICROPY_HW_FMC_D14      (pin_D9)
 #define MICROPY_HW_FMC_D15      (pin_D10)
-#define MICROPY_HW_FMC_D16      (pin_H8)
-#define MICROPY_HW_FMC_D17      (pin_H9)
-#define MICROPY_HW_FMC_D18      (pin_H10)
-#define MICROPY_HW_FMC_D19      (pin_H11)
-#define MICROPY_HW_FMC_D20      (pin_H12)
-#define MICROPY_HW_FMC_D21      (pin_H13)
-#define MICROPY_HW_FMC_D22      (pin_H14)
-#define MICROPY_HW_FMC_D23      (pin_H15)
-#define MICROPY_HW_FMC_D24      (pin_I0)
-#define MICROPY_HW_FMC_D25      (pin_I1)
-#define MICROPY_HW_FMC_D26      (pin_I2)
-#define MICROPY_HW_FMC_D27      (pin_I3)
-#define MICROPY_HW_FMC_D28      (pin_I6)
-#define MICROPY_HW_FMC_D29      (pin_I7)
-#define MICROPY_HW_FMC_D30      (pin_I9)
-#define MICROPY_HW_FMC_D31      (pin_I10)
+
+
+#define MICROPY_HW_ANALOG_SWITCH_PC2    (SYSCFG_SWITCH_PC2_OPEN)
+#define MICROPY_HW_ANALOG_SWITCH_PC3    (SYSCFG_SWITCH_PC3_OPEN)
 
 #define MICROPY_HW_USB_VID                      0x37C5
 #define MICROPY_HW_USB_PID                      0x124A
