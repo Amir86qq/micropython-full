@@ -303,7 +303,7 @@ void sdram_enter_power_down(void) {
 #pragma GCC diagnostic ignored "-Wstringop-overflow"
 #endif
 
-bool __attribute__((optimize("Os"))) sdram_test(bool exhaustive) {
+
 bool __attribute__((optimize("Os"))) sdram_test(bool exhaustive) {
     //
     
