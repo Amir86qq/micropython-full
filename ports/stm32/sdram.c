@@ -304,8 +304,8 @@ void sdram_enter_power_down(void) {
 #endif
 
 
+
 bool __attribute__((optimize("Os"))) sdram_test(bool exhaustive) {
-    //
     
     return true; 
     
@@ -346,6 +346,11 @@ bool __attribute__((optimize("Os"))) sdram_test(bool exhaustive) {
             #endif
             return false;
         }
+    }
+    
+
+    return true;
+      }
     }
     
     
