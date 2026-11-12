@@ -138,7 +138,7 @@ extern struct _spi_bdev_t spi_bdev;
 // Timing configuration for 200MHz/2=100MHz (10ns)
 
 #define MICROPY_HW_SDRAM_CLOCK_PERIOD       2   
-#define MICROPY_HW_SDRAM_CAS_LATENCY        3    
+#define MICROPY_HW_SDRAM_CAS_LATENCY        2    
 #define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (100000) 
 
 // 
