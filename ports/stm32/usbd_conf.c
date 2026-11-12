@@ -173,15 +173,12 @@ static void mp_usbd_ll_init_fs(void) {
         } else {
             HAL_PWREx_EnableVddUSB();
         }
-        #elif defined(STM32H7)  
-        if (__HAL_RCC_PWR_IS_CLK_DISABLED()) {
-            __HAL_RCC_PWR_CLK_ENABLE();
-            HAL_PWREx_EnableVddUSB();
-            __HAL_RCC_PWR_CLK_DISABLE();
-        } else {
-            HAL_PWREx_EnableVddUSB();
-        }
+        #elif defined(STM32H7)
+        __HAL_RCC_PWR_CLK_ENABLE();
+        HAL_PWREx_EnableUSBReg();
+        __HAL_RCC_PWR_CLK_DISABLE();
         #endif
+        
         
 
         // Configure and enable USB FS interrupt
