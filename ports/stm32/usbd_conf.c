@@ -172,6 +172,8 @@ static void mp_usbd_ll_init_fs(void) {
         } else {
             HAL_PWREx_EnableVddUSB();
         }
+        #elif defined(STM32H7)
+        HAL_PWREx_EnableUSBReg();
         #endif
 
         // Configure and enable USB FS interrupt
