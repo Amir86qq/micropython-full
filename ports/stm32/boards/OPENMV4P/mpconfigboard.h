@@ -140,7 +140,7 @@ extern struct _spi_bdev_t spi_bdev;
 
 #define MICROPY_HW_SDRAM_CLOCK_PERIOD       3   
 #define MICROPY_HW_SDRAM_CAS_LATENCY        3    
-#define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (66666) 
+#define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (50000) 
 
 // 
 #define MICROPY_HW_SDRAM_TIMING_TMRD        (16)  
