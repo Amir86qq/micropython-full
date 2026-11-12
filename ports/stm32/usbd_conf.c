@@ -115,7 +115,6 @@ static void mp_usbd_ll_init_fs(void) {
         mp_hal_pin_config_speed(pin_A12, GPIO_SPEED_FREQ_VERY_HIGH);
 
         #else
-
         // Other MCUs have an alternate function for GPIO's to be in USB mode.
 
         #if defined(STM32H7)
@@ -173,10 +172,7 @@ static void mp_usbd_ll_init_fs(void) {
         } else {
             HAL_PWREx_EnableVddUSB();
         }
-        
         #endif
-        
-        
 
         // Configure and enable USB FS interrupt
         #if defined(STM32G0)
@@ -235,7 +231,7 @@ static void mp_usbd_ll_init_hs(void) {
         __HAL_RCC_USBPHYC_CLK_ENABLE();
 
         // Enable VDDUSB
-        if (__HAL_RCC_PWR_IS_CLK_DISABLED()) {
+if (__HAL_RCC_PWR_IS_CLK_DISABLED()) {
             __HAL_RCC_PWR_CLK_ENABLE();
             HAL_PWREx_EnableVddUSB();
 
@@ -351,7 +347,6 @@ static void mp_usbd_ll_init_hs(void) {
     }
 }
 #endif // MICROPY_HW_USB_HS
-
 #if MICROPY_HW_TINYUSB_STACK
 
 void mp_usbd_ll_init(void) {
