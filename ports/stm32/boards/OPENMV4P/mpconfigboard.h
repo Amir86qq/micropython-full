@@ -84,6 +84,7 @@ void board_low_power(int mode);
 #define MICROPY_HW_USB_FS                   (1)
 #define MICROPY_HW_USB_CDC_RX_DATA_SIZE     (512)
 #define MICROPY_HW_USB_CDC_TX_DATA_SIZE     (512)
+#define MICROPY_HW_USB_VBUS_DETECT_PIN      (pin_A9)
 // 
 
 
