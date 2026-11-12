@@ -174,9 +174,7 @@ static void mp_usbd_ll_init_fs(void) {
             HAL_PWREx_EnableVddUSB();
         }
         #elif defined(STM32H7)
-        __HAL_RCC_PWR_CLK_ENABLE();
         HAL_PWREx_EnableUSBReg();
-        __HAL_RCC_PWR_CLK_DISABLE();
         #endif
         
         
