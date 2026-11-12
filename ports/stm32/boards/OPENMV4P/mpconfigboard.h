@@ -131,7 +131,7 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_BDEV_SPIFLASH_SIZE_BYTES (MICROPY_HW_SPIFLASH_SIZE_BITS / 8)
 
 // SDRAM
-#define MICROPY_HW_SDRAM_SIZE               (0)
+#define MICROPY_HW_SDRAM_SIZE               (32 * 1024 * 1024)
 #define MICROPY_HW_SDRAM_STARTUP_TEST       (0)
 #define MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR (true)
 
