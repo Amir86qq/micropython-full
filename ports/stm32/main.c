@@ -479,7 +479,7 @@ void stm32_main(uint32_t reset_mode) {
     #if defined(STM32WL)
     subghz_init();
     #endif
-    #if MICROPY_HW_SDRAM_SIZE
+    #if 0 // MICROPY_HW_SDRAM_SIZE
     sdram_init();
     bool sdram_valid = true;
     UNUSED(sdram_valid);
