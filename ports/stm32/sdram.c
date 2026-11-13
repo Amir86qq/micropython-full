@@ -61,6 +61,7 @@
 static void sdram_init_seq(SDRAM_HandleTypeDef *hsdram, FMC_SDRAM_CommandTypeDef *command);
 
 bool sdram_init(void) {
+    __FMC_NORSRAM_DISABLE(FMC_Bank1_R, FMC_NORSRAM_BANK1);
     HAL_Delay(2);
     SDRAM_HandleTypeDef hsdram;
     FMC_SDRAM_TimingTypeDef SDRAM_Timing;
