@@ -684,8 +684,14 @@ soft_reset:
 
     #if MICROPY_HW_STM_USB_STACK
     // init USB device to default setting if it was not already configured
-            const uint16_t pid = MICROPY_HW_USB_PID_CDC;
-            const uint8_t mode = USBD_MODE_CDC;
+    if (!(pyb_usb_flags & PYB_USB_FLAG_USB_MODE_CALLED)) {
+        #if MICROPY_HW_USB_MSC
+        const uint16_t pid = MICROPY_HW_USB_PID_CDC_MSC;
+        const uint8_t mode = USBD_MODE_CDC_MSC;
+        #else
+        const uint16_t pid = MICROPY_HW_USB_PID_CDC;
+        const uint8_t mode = USBD_MODE_CDC;
+        #endif
         pyb_usb_dev_init(pyb_usb_dev_detect(), MICROPY_HW_USB_VID, pid, mode, 0, NULL, NULL);
     }
     #endif
