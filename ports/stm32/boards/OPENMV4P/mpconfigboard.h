@@ -64,6 +64,8 @@ void board_low_power(int mode);
 // UART2 config (PA2 و PA3)
 #define MICROPY_HW_UART2_TX  (pin_A2)
 #define MICROPY_HW_UART2_RX  (pin_A3)
+#define MICROPY_HW_UART_REPL        (1)
+#define MICROPY_HW_UART_REPL_BAUD   (115200)
 
 // I2C buses
 // I2C1 (PB6 و PB7)
