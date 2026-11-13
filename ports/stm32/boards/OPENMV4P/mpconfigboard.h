@@ -58,8 +58,11 @@ void board_low_power(int mode);
 #define MICROPY_HW_CLK_PLLR         (2)
 
 // UART1 config (PB14 و PB15)
+
 #define MICROPY_HW_UART1_TX  (pin_B14)
 #define MICROPY_HW_UART1_RX  (pin_B15)
+#define MICROPY_HW_UART_REPL        (1)
+#define MICROPY_HW_UART_REPL_BAUD   (115200)
 
 // UART2 config (PA2 و PA3)
 #define MICROPY_HW_UART2_TX  (pin_A2)
