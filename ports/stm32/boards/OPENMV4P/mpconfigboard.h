@@ -140,19 +140,17 @@ extern struct _spi_bdev_t spi_bdev;
 
 
 // Timing configuration for 200MHz/2=100MHz (10ns)
+#define MICROPY_HW_SDRAM_CLOCK_PERIOD       2
+#define MICROPY_HW_SDRAM_CAS_LATENCY        3
+#define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (100000)
 
-#define MICROPY_HW_SDRAM_CLOCK_PERIOD       3   
-#define MICROPY_HW_SDRAM_CAS_LATENCY        3    
-#define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (50000) 
-
-// 
-#define MICROPY_HW_SDRAM_TIMING_TMRD        (16)  
-#define MICROPY_HW_SDRAM_TIMING_TXSR        (16)  
-#define MICROPY_HW_SDRAM_TIMING_TRAS        (16)  
-#define MICROPY_HW_SDRAM_TIMING_TRC         (16)  
-#define MICROPY_HW_SDRAM_TIMING_TWR         (16)  
-#define MICROPY_HW_SDRAM_TIMING_TRP         (16)  
-#define MICROPY_HW_SDRAM_TIMING_TRCD        (16)  
+#define MICROPY_HW_SDRAM_TIMING_TMRD        (2)
+#define MICROPY_HW_SDRAM_TIMING_TXSR        (7)
+#define MICROPY_HW_SDRAM_TIMING_TRAS        (5)
+#define MICROPY_HW_SDRAM_TIMING_TRC         (6)
+#define MICROPY_HW_SDRAM_TIMING_TWR         (3)
+#define MICROPY_HW_SDRAM_TIMING_TRP         (2)
+#define MICROPY_HW_SDRAM_TIMING_TRCD        (2)
 
 // SDRAM 16-bit
 #define MICROPY_HW_SDRAM_ROW_BITS_NUM       13
