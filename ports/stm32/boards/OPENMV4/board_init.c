@@ -1,4 +1,5 @@
 #include "py/mphal.h"
+
 #define OMV_BOOTLOADER_MAGIC_ADDR   (0x2001FFFCU)
 #define OMV_BOOTLOADER_MAGIC_VALUE  (0xB00710ADU)
 
