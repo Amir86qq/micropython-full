@@ -117,7 +117,7 @@ extern const struct _mp_obj_type_t mod_network_nic_type_winc;
 // QSPI Flash 256MBits (W25Q256)
 #define MICROPY_HW_QSPI_PRESCALER           (2)
 #define MICROPY_HW_QSPIFLASH_SIZE_BITS_LOG2 (28)
-#define MICROPY_HW_SPIFLASH_SIZE_BITS       (192 * 1024 * 1024)
+#define MICROPY_HW_SPIFLASH_SIZE_BITS       (256 * 1024 * 1024)
 #define MICROPY_HW_QSPIFLASH_CS             (pyb_pin_QSPIFLASH_CS)
 #define MICROPY_HW_QSPIFLASH_SCK            (pyb_pin_QSPIFLASH_SCK)
 #define MICROPY_HW_QSPIFLASH_IO0            (pyb_pin_QSPIFLASH_IO0)
