@@ -56,6 +56,10 @@ void board_low_power(int mode);
 #define MICROPY_HW_CLK_PLLP         (2)
 #define MICROPY_HW_CLK_PLLQ         (20)
 #define MICROPY_HW_CLK_PLLR         (2)
+//just tor test 
+#define MICROPY_HW_RCC_FMC_CLKSOURCE    (RCC_FMCCLKSOURCE_PLL2)
+#define MICROPY_HW_RCC_QSPI_CLKSOURCE   (RCC_QSPICLKSOURCE_PLL2)
+
 
 // UART1 config (PB14 و PB15)
 
