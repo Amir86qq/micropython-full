@@ -306,6 +306,19 @@ void sdram_enter_power_down(void) {
 #endif
 
 bool __attribute__((optimize("Os"))) sdram_test(bool exhaustive) {
+    // Simple memory test: Write pattern to every address and read it back
+    volatile uint32_t *sdram = (volatile uint32_t *)SDRAM_START_ADDRESS;
+    uint32_t size = MICROPY_HW_SDRAM_SIZE / 4; // Size in 32-bit words
+    uint32_t pattern = 0xA5A5A5A5;
+
+    for (uint32_t i = 0; i < size; i++) {
+        sdram[i] = pattern;
+    }
+    for (uint32_t i = 0; i < size; i++) {
+        if (sdram[i] != pattern) {
+            return false; // Test failed
+        }
+    }
     return true;
 }
 
