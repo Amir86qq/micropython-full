@@ -4,8 +4,8 @@
  * Copyright (c) 2022 Arduino SA
  */
 
-#define MICROPY_HW_BOARD_NAME       "Arduino Portenta H7"
-#define MICROPY_HW_MCU_NAME         "STM32H747"
+#define MICROPY_HW_BOARD_NAME       "Arduino Portenta H7" // Name kept as requested
+#define MICROPY_HW_MCU_NAME         "STM32H743"
 #define MICROPY_HW_FLASH_FS_LABEL   "Portenta H7"
 
 // Network config
@@ -55,12 +55,11 @@ void PORTENTA_board_osc_enable(int enable);
 #define MICROPY_BOARD_PRE_STOP      PORTENTA_board_osc_enable(0);
 #define MICROPY_BOARD_POST_STOP     PORTENTA_board_osc_enable(1);
 
-// PLL1 400MHz/50MHz for SDMMC and FDCAN
-// USB and RNG are clocked from the HSI48
+// PLL1 480MHz for CPU (From your custom board config)
 #define MICROPY_HW_CLK_PLLM             (5)
-#define MICROPY_HW_CLK_PLLN             (160)
+#define MICROPY_HW_CLK_PLLN             (192)
 #define MICROPY_HW_CLK_PLLP             (2)
-#define MICROPY_HW_CLK_PLLQ             (16)
+#define MICROPY_HW_CLK_PLLQ             (20)
 #define MICROPY_HW_CLK_PLLR             (2)
 #define MICROPY_HW_CLK_PLLVCI           (RCC_PLL1VCIRANGE_2)
 #define MICROPY_HW_CLK_PLLVCO           (RCC_PLL1VCOWIDE)
@@ -86,8 +85,8 @@ void PORTENTA_board_osc_enable(int enable);
 #define MICROPY_HW_CLK_PLL3VCO          (RCC_PLL3VCOWIDE)
 #define MICROPY_HW_CLK_PLL3FRAC         (0)
 
-// HSE in BYPASS mode.
-#define MICROPY_HW_CLK_USE_BYPASS       (1)
+// HSE in BYPASS mode is disabled (Custom board uses standard crystal)
+#define MICROPY_HW_CLK_USE_BYPASS       (0)
 
 // Bus clock divider values
 #define MICROPY_HW_CLK_AHB_DIV          (RCC_HCLK_DIV2)
@@ -109,8 +108,8 @@ void PORTENTA_board_osc_enable(int enable);
 #define MICROPY_HW_RCC_I2C123_CLKSOURCE (RCC_I2C123CLKSOURCE_D2PCLK1)
 #define MICROPY_HW_RCC_QSPI_CLKSOURCE   (RCC_QSPICLKSOURCE_PLL2)
 
-// SMPS configuration
-#define MICROPY_HW_PWR_SMPS_CONFIG      (PWR_SMPS_1V8_SUPPLIES_LDO)
+// SMPS configuration (Changed to LDO for custom board)
+#define MICROPY_HW_PWR_SMPS_CONFIG      (PWR_LDO_SUPPLY)
 
 // Configure the analog switches for dual-pad pins.
 #define MICROPY_HW_ANALOG_SWITCH_PA0    (SYSCFG_SWITCH_PA0_OPEN)
@@ -126,11 +125,10 @@ void PORTENTA_board_osc_enable(int enable);
 #define MICROPY_HW_RTC_USE_CALOUT   (1)
 
 #if (MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE == 0)
-// QSPI flash #1 for storage
+// QSPI flash #1 for storage (Custom board uses 256MBits = 32MB)
 #define MICROPY_HW_QSPI_PRESCALER           (2) // 100MHz
-#define MICROPY_HW_QSPIFLASH_SIZE_BITS_LOG2 (27)
-// Reserve 4MiB for romfs and 1MiB for WiFi/BT firmware.
-#define MICROPY_HW_SPIFLASH_SIZE_BITS       (88 * 1024 * 1024)
+#define MICROPY_HW_QSPIFLASH_SIZE_BITS_LOG2 (28)
+#define MICROPY_HW_SPIFLASH_SIZE_BITS       (256 * 1024 * 1024)
 #define MICROPY_HW_QSPIFLASH_CS             (pyb_pin_QSPI2_CS)
 #define MICROPY_HW_QSPIFLASH_SCK            (pyb_pin_QSPI2_CLK)
 #define MICROPY_HW_QSPIFLASH_IO0            (pyb_pin_QSPI2_D0)
@@ -147,42 +145,30 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_BDEV_SPIFLASH_EXTENDED (&spi_bdev)
 #endif
 
-// 4 wait states
+// Flash latency
 #define MICROPY_HW_FLASH_LATENCY    FLASH_LATENCY_2
 
-// UART config
-#define MICROPY_HW_UART1_TX         (pin_A9)
-#define MICROPY_HW_UART1_RX         (pin_A10)
+// UART config (From your custom board)
+#define MICROPY_HW_UART1_TX         (pin_B14)
+#define MICROPY_HW_UART1_RX         (pin_B15)
 #define MICROPY_HW_UART_REPL        PYB_UART_1
 #define MICROPY_HW_UART_REPL_BAUD   115200
 
-// UART config
-#define MICROPY_HW_UART8_TX         (pin_J8)
-#define MICROPY_HW_UART8_RX         (pin_J9)
+#define MICROPY_HW_UART2_TX         (pin_A2)
+#define MICROPY_HW_UART2_RX         (pin_A3)
 
-// UART7 config
-#define MICROPY_HW_UART7_TX         (pyb_pin_BT_TXD)
-#define MICROPY_HW_UART7_RX         (pyb_pin_BT_RXD)
-#define MICROPY_HW_UART7_RTS        (pyb_pin_BT_RTS)
-#define MICROPY_HW_UART7_CTS        (pyb_pin_BT_CTS)
-
-// I2C buses
+// I2C buses (From your custom board)
 #define MICROPY_HW_I2C1_SCL         (pin_B6)
 #define MICROPY_HW_I2C1_SDA         (pin_B7)
 
-#define MICROPY_HW_I2C3_SCL         (pin_H7)
-#define MICROPY_HW_I2C3_SDA         (pin_H8)
+#define MICROPY_HW_I2C2_SCL         (pin_H4)
+#define MICROPY_HW_I2C2_SDA         (pin_H5)
 
-// SPI buses
-#define MICROPY_HW_SPI1_NSS         (pin_C13)
-#define MICROPY_HW_SPI1_SCK         (pin_B3)
-#define MICROPY_HW_SPI1_MISO        (pin_B4)
-#define MICROPY_HW_SPI1_MOSI        (pin_D7)
-
-#define MICROPY_HW_SPI2_NSS         (pin_I0)
-#define MICROPY_HW_SPI2_SCK         (pin_I1)
-#define MICROPY_HW_SPI2_MISO        (pin_C2)
-#define MICROPY_HW_SPI2_MOSI        (pin_C3)
+// SPI buses (SPI3 for SD Card, From your custom board)
+#define MICROPY_HW_SPI3_NSS         (pin_I2)
+#define MICROPY_HW_SPI3_SCK         (pin_B3)
+#define MICROPY_HW_SPI3_MISO        (pin_B4)
+#define MICROPY_HW_SPI3_MOSI        (pin_B5)
 
 // USRSW is pulled low. Pressing the button makes the input go high.
 #define MICROPY_HW_USRSW_PIN        (pin_A0)
@@ -190,78 +176,44 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_USRSW_EXTI_MODE  (GPIO_MODE_IT_RISING)
 #define MICROPY_HW_USRSW_PRESSED    (1)
 
-// LEDs
-#define MICROPY_HW_LED1             (pyb_pin_LED_RED) // red
-#define MICROPY_HW_LED2             (pyb_pin_LED_GREEN) // green
-#define MICROPY_HW_LED3             (pyb_pin_LED_BLUE) // yellow
+// LEDs (From your custom board)
+#define MICROPY_HW_LED1             (pin_G13) // Red
+#define MICROPY_HW_LED2             (pin_B8)  // Green
+#define MICROPY_HW_LED3             (pin_I8)  // Blue
+#define MICROPY_HW_LED4             (pin_I4)  // IR
 #define MICROPY_HW_LED_ON(pin)      (mp_hal_pin_low(pin))
 #define MICROPY_HW_LED_OFF(pin)     (mp_hal_pin_high(pin))
 
-// WiFi SDMMC
-#define MICROPY_HW_SDIO_SDMMC       (1)
-#define MICROPY_HW_SDIO_CK          (pin_C12)
-#define MICROPY_HW_SDIO_CMD         (pin_D2)
-#define MICROPY_HW_SDIO_D0          (pin_C8)
-#define MICROPY_HW_SDIO_D1          (pin_C9)
-#define MICROPY_HW_SDIO_D2          (pin_C10)
-#define MICROPY_HW_SDIO_D3          (pin_C11)
-
-// SD Card SDMMC
-#define MICROPY_HW_SDCARD_SDMMC     (2)
-#define MICROPY_HW_SDCARD_CK        (pin_D6)
-#define MICROPY_HW_SDCARD_CMD       (pin_D7)
-#define MICROPY_HW_SDCARD_D0        (pin_B14)
-#define MICROPY_HW_SDCARD_D1        (pin_B15)
-#define MICROPY_HW_SDCARD_D2        (pin_B3)
-#define MICROPY_HW_SDCARD_D3        (pin_B4)
-#define MICROPY_HW_SDCARD_MOUNT_AT_BOOT (0)
-
-// FDCAN bus
-#define MICROPY_HW_CAN1_NAME        "FDCAN1"
-#define MICROPY_HW_CAN1_TX          (pin_H13)
-#define MICROPY_HW_CAN1_RX          (pin_B8)
-
-// USB config
-#define MICROPY_HW_USB_HS           (1)
-#define MICROPY_HW_USB_HS_ULPI_NXT  (pin_H4)
-#define MICROPY_HW_USB_HS_ULPI_STP  (pin_C0)
-#define MICROPY_HW_USB_HS_ULPI_DIR  (pin_I11)
-#define MICROPY_HW_USB_HS_ULPI3320  (1)
-
+// USB config (From your custom board)
+#define MICROPY_HW_USB_FS           (1)
 #define MICROPY_HW_USB_CDC_RX_DATA_SIZE     (1024)
 #define MICROPY_HW_USB_CDC_TX_DATA_SIZE     (1024)
 #define MICROPY_HW_USB_CDC_1200BPS_TOUCH    (1)
 #define GPIO_AF10_OTG_HS                    (GPIO_AF10_OTG2_HS)
 
-// Bluetooth config
-#define MICROPY_HW_BLE_UART_ID              (PYB_UART_7)
-#define MICROPY_HW_BLE_UART_BAUDRATE        (115200)
-#define MICROPY_HW_BLE_UART_BAUDRATE_SECONDARY (3000000)
-#define MICROPY_HW_BLE_UART_BAUDRATE_DOWNLOAD_FIRMWARE (3000000)
-
-// SDRAM
-#define MICROPY_HW_SDRAM_SIZE               (64 / 8 * 1024 * 1024)  // 64 Mbit
-#define MICROPY_HW_SDRAM_STARTUP_TEST       (1)
+// SDRAM (Custom board 16-bit 32MB - schematic says MT48LC16M16A2P)
+#define MICROPY_HW_SDRAM_SIZE               (32 * 1024 * 1024) // 32MB
+#define MICROPY_HW_SDRAM_STARTUP_TEST       (0)
 #define MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR (true)
-#define MICROPY_HW_FMC_SWAP_BANKS           (1)
+#define MICROPY_HW_FMC_SWAP_BANKS           (0)
 
-// Timing configuration for 200MHz/2=100MHz (10ns)
+// Timing configuration (Copied exactly from your custom file for MT48LC16M16A2P-75)
 #define MICROPY_HW_SDRAM_CLOCK_PERIOD       2
-#define MICROPY_HW_SDRAM_CAS_LATENCY        2
+#define MICROPY_HW_SDRAM_CAS_LATENCY        3
 #define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (100000) // 100 MHz
-#define MICROPY_HW_SDRAM_TIMING_TMRD        (2)
-#define MICROPY_HW_SDRAM_TIMING_TXSR        (7)
-#define MICROPY_HW_SDRAM_TIMING_TRAS        (5)
-#define MICROPY_HW_SDRAM_TIMING_TRC         (7)
-#define MICROPY_HW_SDRAM_TIMING_TWR         (2)
-#define MICROPY_HW_SDRAM_TIMING_TRP         (3)
-#define MICROPY_HW_SDRAM_TIMING_TRCD        (3)
+#define MICROPY_HW_SDRAM_TIMING_TMRD        (16)
+#define MICROPY_HW_SDRAM_TIMING_TXSR        (16)
+#define MICROPY_HW_SDRAM_TIMING_TRAS        (16)
+#define MICROPY_HW_SDRAM_TIMING_TRC         (16)
+#define MICROPY_HW_SDRAM_TIMING_TWR         (16)
+#define MICROPY_HW_SDRAM_TIMING_TRP         (16)
+#define MICROPY_HW_SDRAM_TIMING_TRCD        (16)
 
-#define MICROPY_HW_SDRAM_ROW_BITS_NUM       12
+#define MICROPY_HW_SDRAM_ROW_BITS_NUM       13
 #define MICROPY_HW_SDRAM_MEM_BUS_WIDTH      16
-#define MICROPY_HW_SDRAM_REFRESH_CYCLES     4096
+#define MICROPY_HW_SDRAM_REFRESH_CYCLES     8192
 
-#define MICROPY_HW_SDRAM_COLUMN_BITS_NUM    8
+#define MICROPY_HW_SDRAM_COLUMN_BITS_NUM    9
 #define MICROPY_HW_SDRAM_INTERN_BANKS_NUM   4
 #define MICROPY_HW_SDRAM_RPIPE_DELAY        0
 #define MICROPY_HW_SDRAM_RBURST             (1)
@@ -271,15 +223,15 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SDRAM_BURST_LENGTH       1
 #define MICROPY_HW_SDRAM_REFRESH_RATE       (64) // ms
 
-// SDRAM configuration
-#define MICROPY_HW_FMC_SDCKE0       (pin_H2)
-#define MICROPY_HW_FMC_SDNE0        (pin_H3)
+// SDRAM configuration (Copied exactly from your custom file - FMC pins)
+#define MICROPY_HW_FMC_SDCKE0       (pin_C3)
+#define MICROPY_HW_FMC_SDNE0        (pin_C2)
 #define MICROPY_HW_FMC_SDNBL0       (pin_E0)
 #define MICROPY_HW_FMC_SDNBL1       (pin_E1)
 #define MICROPY_HW_FMC_SDCLK        (pin_G8)
 #define MICROPY_HW_FMC_SDNCAS       (pin_G15)
 #define MICROPY_HW_FMC_SDNRAS       (pin_F11)
-#define MICROPY_HW_FMC_SDNWE        (pin_H5)
+#define MICROPY_HW_FMC_SDNWE        (pin_C0)
 #define MICROPY_HW_FMC_BA0          (pin_G4)
 #define MICROPY_HW_FMC_BA1          (pin_G5)
 #define MICROPY_HW_FMC_NBL0         (pin_E0)
@@ -314,17 +266,7 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_FMC_D14          (pin_D9)
 #define MICROPY_HW_FMC_D15          (pin_D10)
 
-// Ethernet via RMII
-#define MICROPY_HW_ETH_MDC          (pin_C1)
-#define MICROPY_HW_ETH_MDIO         (pin_A2)
-#define MICROPY_HW_ETH_RMII_REF_CLK (pin_A1)
-#define MICROPY_HW_ETH_RMII_CRS_DV  (pin_A7)
-#define MICROPY_HW_ETH_RMII_RXD0    (pin_C4)
-#define MICROPY_HW_ETH_RMII_RXD1    (pin_C5)
-#define MICROPY_HW_ETH_RMII_TX_EN   (pin_G11)
-#define MICROPY_HW_ETH_RMII_TXD0    (pin_G13)
-#define MICROPY_HW_ETH_RMII_TXD1    (pin_G12)
-
+// USB IDs (Kept Arduino for Bootloader compatibility)
 #define MICROPY_HW_USB_VID                      0x2341
 #ifndef MICROPY_HW_USB_PID
 #define MICROPY_HW_USB_PID                      0x055B
