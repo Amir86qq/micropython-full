@@ -9,6 +9,8 @@
 #define MICROPY_PY_SYS_PLATFORM     "OpenMV4P-H7"
 #define MICROPY_HW_FLASH_FS_LABEL   "OPENMV"
 #define MICROPY_HW_VTOR (0x08040000)
+// Power supply configuration
+#define MICROPY_HW_PWR_SMPS_CONFIG (PWR_LDO_SUPPLY)
 
 // Network config
 #define MICROPY_PY_NETWORK_HOSTNAME_DEFAULT "mpy-openmv-4p"
