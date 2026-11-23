@@ -56,9 +56,7 @@ void board_low_power(int mode);
 #define MICROPY_HW_CLK_PLLP         (2)
 #define MICROPY_HW_CLK_PLLQ         (20)
 #define MICROPY_HW_CLK_PLLR         (2)
-//just tor test 
-#define MICROPY_HW_RCC_FMC_CLKSOURCE    (RCC_FMCCLKSOURCE_PLL2)
-#define MICROPY_HW_RCC_QSPI_CLKSOURCE   (RCC_QSPICLKSOURCE_PLL2)
+
 
 
 // UART1 config (PB14 و PB15)
@@ -138,9 +136,7 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_BDEV_SPIFLASH_SIZE_BYTES (MICROPY_HW_SPIFLASH_SIZE_BITS / 8)
 
 // SDRAM
-#define MICROPY_HW_SDRAM_SIZE               (32 * 1024 * 1024)
-#define MICROPY_HEAP_START                  (sdram_start())
-#define MICROPY_HEAP_END                    (sdram_end())
+#define MICROPY_HW_SDRAM_SIZE               (192 * 1024 * 1024)
 #define MICROPY_HW_SDRAM_STARTUP_TEST       (0)
 #define MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR (true)
 
