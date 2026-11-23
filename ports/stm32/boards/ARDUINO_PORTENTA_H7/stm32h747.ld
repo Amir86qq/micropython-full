@@ -1,5 +1,5 @@
 /*
-    GNU linker script for STM32H747
+    GNU linker script for STM32H743 (Custom Portenta H7 variant)
 */
 
 /* Specify the memory areas */
@@ -15,9 +15,8 @@ MEMORY
     FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 2048K   /* Total available flash */
     FLASH_BL (rx)   : ORIGIN = 0x08000000, LENGTH = 128K    /* Arduino bootloader */
     FLASH_FS (r)    : ORIGIN = 0x08020000, LENGTH = 128K    /* filesystem */
-    FLASH_TEXT (rx) : ORIGIN = 0x08040000, LENGTH = 1280K   /* CM7 firmware */
-    FLASH_CM4 (rx)  : ORIGIN = 0x08180000, LENGTH = 512K    /* CM4 firmware */
-    FLASH_ROMFS (rx) : ORIGIN = 0x90B00000, LENGTH = 4096K   /* romfs partition in QSPI flash */
+    FLASH_TEXT (rx) : ORIGIN = 0x08040000, LENGTH = 1792K   /* CM7 firmware (Rest of internal flash) */
+    FLASH_ROMFS (rx): ORIGIN = 0x91800000, LENGTH = 8192K   /* romfs partition in QSPI flash (8MB) */
 }
 
 /* produce a link error if there is not this amount of RAM for these sections */
@@ -48,8 +47,10 @@ _micropy_hw_internal_flash_storage_end = ORIGIN(FLASH_FS) + LENGTH(FLASH_FS);
 _micropy_hw_romfs_part0_start = ORIGIN(FLASH_ROMFS);
 _micropy_hw_romfs_part0_size = LENGTH(FLASH_ROMFS);
 
-/* OpenAMP shared memory region */
-_openamp_shm_region_start = ORIGIN(SRAM4);
-_openamp_shm_region_end = ORIGIN(SRAM4) + LENGTH(SRAM4);
+/* 
+   OpenAMP shared memory region: REMOVED 
+   The original Portenta used this to communicate with the M4 core. 
+   Since the custom STM32H743 is single-core, this region is not needed.
+*/
 
 INCLUDE common_blifs.ld
