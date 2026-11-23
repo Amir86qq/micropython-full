@@ -8,6 +8,7 @@
 #define MICROPY_HW_MCU_NAME         "STM32H743"
 #define MICROPY_PY_SYS_PLATFORM     "OpenMV4P-H7"
 #define MICROPY_HW_FLASH_FS_LABEL   "OPENMV"
+#define MICROPY_HW_VTOR (0x08040000)
 
 // Network config
 #define MICROPY_PY_NETWORK_HOSTNAME_DEFAULT "mpy-openmv-4p"
