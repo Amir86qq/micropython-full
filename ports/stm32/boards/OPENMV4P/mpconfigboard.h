@@ -122,7 +122,7 @@ extern const struct _mp_obj_type_t mod_network_nic_type_winc;
 // QSPI Flash 256MBits (W25Q256)
 #define MICROPY_HW_QSPI_PRESCALER           (2)
 #define MICROPY_HW_QSPIFLASH_SIZE_BITS_LOG2 (28)
-#define MICROPY_HW_SPIFLASH_SIZE_BITS       (256 * 1024 * 1024)
+#define MICROPY_HW_SPIFLASH_SIZE_BITS       (192 * 1024 * 1024)
 #define MICROPY_HW_QSPIFLASH_CS             (pyb_pin_QSPIFLASH_CS)
 #define MICROPY_HW_QSPIFLASH_SCK            (pyb_pin_QSPIFLASH_SCK)
 #define MICROPY_HW_QSPIFLASH_IO0            (pyb_pin_QSPIFLASH_IO0)
@@ -146,7 +146,7 @@ extern struct _spi_bdev_t spi_bdev;
 
 // Timing configuration for 200MHz/2=100MHz (10ns)
 #define MICROPY_HW_SDRAM_CLOCK_PERIOD       2
-#define MICROPY_HW_SDRAM_CAS_LATENCY        3
+#define MICROPY_HW_SDRAM_CAS_LATENCY        2
 #define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (100000)
 
 #define MICROPY_HW_SDRAM_TIMING_TMRD        (2)
