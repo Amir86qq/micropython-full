@@ -31,7 +31,7 @@ typedef unsigned int mp_uint_t;     // must be pointer size
 #define MICROPY_HW_HAS_FLASH        (1)
 #define MICROPY_HW_ENABLE_SERVO     (1)
 #define MICROPY_HW_ENABLE_TIMER     (1)
-#define MICROPY_HW_ENABLE_SDCARD    (1)
+#define MICROPY_HW_ENABLE_SDCARD    (0)
 #define MICROPY_HW_ENTER_BOOTLOADER_VIA_RESET   (0)
 #define MICROPY_HW_TIM_IS_RESERVED(id) (id == 1 || id == 6)
 
