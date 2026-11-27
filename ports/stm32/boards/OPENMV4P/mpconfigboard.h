@@ -83,10 +83,10 @@ void board_low_power(int mode);
 #define MICROPY_HW_I2C2_SDA (pin_H5)
 
 // SPI buses (SPI3 برای کارت SD)
-#define MICROPY_HW_SPI3_NSS  (pin_I2)
-#define MICROPY_HW_SPI3_SCK  (pin_B3)
-#define MICROPY_HW_SPI3_MISO (pin_B4)
-#define MICROPY_HW_SPI3_MOSI (pin_B5)
+//#define MICROPY_HW_SPI3_NSS  (pin_I2)
+//#define MICROPY_HW_SPI3_SCK  (pin_B3)
+//#define MICROPY_HW_SPI3_MISO (pin_B4)
+//#define MICROPY_HW_SPI3_MOSI (pin_B5)
 
 // USB config
 #define MICROPY_HW_USB_FS                   (1)
@@ -150,7 +150,7 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (100000)
 
 #define MICROPY_HW_SDRAM_TIMING_TMRD        (2)
-#define MICROPY_HW_SDRAM_TIMING_TXSR        (7)
+#define MICROPY_HW_SDRAM_TIMING_TXSR        (8)
 #define MICROPY_HW_SDRAM_TIMING_TRAS        (5)
 #define MICROPY_HW_SDRAM_TIMING_TRC         (7)
 #define MICROPY_HW_SDRAM_TIMING_TWR         (2)
