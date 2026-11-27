@@ -26,7 +26,7 @@ typedef unsigned int mp_uint_t;     // must be pointer size
 #define MICROPY_HW_ENABLE_RNG       (1)
 #define MICROPY_HW_ENABLE_ADC       (1)
 #define MICROPY_HW_ENABLE_DAC       (1)
-#define MICROPY_HW_ENABLE_SPI2      (1)
+//#define MICROPY_HW_ENABLE_SPI2      (1)
 #define MICROPY_HW_ENABLE_USB       (1)
 #define MICROPY_HW_HAS_FLASH        (1)
 #define MICROPY_HW_ENABLE_SERVO     (1)
