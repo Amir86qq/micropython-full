@@ -145,7 +145,7 @@ extern struct _spi_bdev_t spi_bdev;
 
 // SDRAM
 #define MICROPY_HW_SDRAM_SIZE               (32 * 1024 * 1024)
-#define MICROPY_HW_SDRAM_STARTUP_TEST       (0)
+#define MICROPY_HW_SDRAM_STARTUP_TEST       (1)
 #define MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR (true)
 
 
@@ -155,10 +155,10 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SDRAM_FREQUENCY_KHZ      (100000)
 
 #define MICROPY_HW_SDRAM_TIMING_TMRD        (2)
-#define MICROPY_HW_SDRAM_TIMING_TXSR        (8)
+#define MICROPY_HW_SDRAM_TIMING_TXSR        (7)
 #define MICROPY_HW_SDRAM_TIMING_TRAS        (5)
-#define MICROPY_HW_SDRAM_TIMING_TRC         (7)
-#define MICROPY_HW_SDRAM_TIMING_TWR         (2)
+#define MICROPY_HW_SDRAM_TIMING_TRC         (6)
+#define MICROPY_HW_SDRAM_TIMING_TWR         (3)
 #define MICROPY_HW_SDRAM_TIMING_TRP         (2)
 #define MICROPY_HW_SDRAM_TIMING_TRCD        (2)
 
@@ -219,8 +219,8 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_FMC_D15      (pin_D10)
 
 
-#define MICROPY_HW_ANALOG_SWITCH_PC2    (SYSCFG_SWITCH_PC2_CLOSE)
-#define MICROPY_HW_ANALOG_SWITCH_PC3    (SYSCFG_SWITCH_PC3_CLOSE)
+//#define MICROPY_HW_ANALOG_SWITCH_PC2    (SYSCFG_SWITCH_PC2_CLOSE)
+//#define MICROPY_HW_ANALOG_SWITCH_PC3    (SYSCFG_SWITCH_PC3_CLOSE)
 
 
 //#define MICROPY_HW_ANALOG_SWITCH_PC2    (SYSCFG_SWITCH_PC2_OPEN)
