@@ -5,11 +5,11 @@
 /* Specify the memory areas */
 MEMORY
 {
-    FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 1536K   
-    FLASH_APP (rx)  : ORIGIN = 0x08040000, LENGTH = 1408K  
-    FLASH_FS (r)    : ORIGIN = 0x08200000, LENGTH = 512K     
-    DTCM (xrw)      : ORIGIN = 0x20000000, LENGTH = 128K
-    RAM (xrw)       : ORIGIN = 0x24000000, LENGTH = 512K
+    FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 1536K   /* sectors (0-7) + (0-3) */
+    FLASH_APP  (rx) : ORIGIN = 0x08020000, LENGTH = 1408K   /* sectors (1-7) + (0-3) */
+    FLASH_FS (r)    : ORIGIN = 0x08180000, LENGTH = 512K    /* sectors         (4-7) */
+    DTCM (xrw)      : ORIGIN = 0x20000000, LENGTH = 128K    /* Used for storage cache */
+    RAM (xrw)       : ORIGIN = 0x24000000, LENGTH = 512K    /* AXI SRAM */
     RAM_D2 (xrw)    : ORIGIN = 0x30000000, LENGTH = 288K
 }
 
