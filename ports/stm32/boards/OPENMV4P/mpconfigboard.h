@@ -55,11 +55,16 @@ void board_low_power(int mode);
 
 
 #define MICROPY_HW_CLK_PLLM         (5)
-#define MICROPY_HW_CLK_PLLN         (192)
+#define MICROPY_HW_CLK_PLLN         (160)
 #define MICROPY_HW_CLK_PLLP         (2)
-#define MICROPY_HW_CLK_PLLQ         (20)
+#define MICROPY_HW_CLK_PLLQ         (16)
 #define MICROPY_HW_CLK_PLLR         (2)
 
+//#define MICROPY_HW_CLK_PLLM         (5)
+//#define MICROPY_HW_CLK_PLLN         (192)
+//#define MICROPY_HW_CLK_PLLP         (2)
+//#define MICROPY_HW_CLK_PLLQ         (20)
+//#define MICROPY_HW_CLK_PLLR         (2)
 
 
 // UART1 config (PB14 و PB15)
