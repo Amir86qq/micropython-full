@@ -5,9 +5,9 @@
 /* Specify the memory areas */
 MEMORY
 {
-    FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 256K   /* Bootloader + FFS */
-    FLASH_APP (rx)  : ORIGIN = 0x08040000, LENGTH = 1792K  /* Firmware (مطابق board_config.mk) */
-    FLASH_FS (r)    : ORIGIN = 0x08200000, LENGTH = 0K     /* 
+    FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 1536K   
+    FLASH_APP (rx)  : ORIGIN = 0x08040000, LENGTH = 1408K  
+    FLASH_FS (r)    : ORIGIN = 0x08200000, LENGTH = 512K     
     DTCM (xrw)      : ORIGIN = 0x20000000, LENGTH = 128K
     RAM (xrw)       : ORIGIN = 0x24000000, LENGTH = 512K
     RAM_D2 (xrw)    : ORIGIN = 0x30000000, LENGTH = 288K
