@@ -61,8 +61,6 @@
 static void sdram_init_seq(SDRAM_HandleTypeDef *hsdram, FMC_SDRAM_CommandTypeDef *command);
 
 bool sdram_init(void) {
-    __FMC_NORSRAM_DISABLE(FMC_Bank1_R, FMC_NORSRAM_BANK1);
-    HAL_Delay(2);
     SDRAM_HandleTypeDef hsdram;
     FMC_SDRAM_TimingTypeDef SDRAM_Timing;
     FMC_SDRAM_CommandTypeDef command;
@@ -306,19 +304,108 @@ void sdram_enter_power_down(void) {
 #endif
 
 bool __attribute__((optimize("Os"))) sdram_test(bool exhaustive) {
-    // Simple memory test: Write pattern to every address and read it back
-    volatile uint32_t *sdram = (volatile uint32_t *)SDRAM_START_ADDRESS;
-    uint32_t size = MICROPY_HW_SDRAM_SIZE / 4; // Size in 32-bit words
-    uint32_t pattern = 0xA5A5A5A5;
+    uint8_t const pattern = 0xaa;
+    uint8_t const antipattern = 0x55;
+    volatile uint8_t *const mem_base = (uint8_t *)sdram_start();
 
-    for (uint32_t i = 0; i < size; i++) {
-        sdram[i] = pattern;
+    #if MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR
+    char error_buffer[1024];
+    #endif
+
+    #if (__DCACHE_PRESENT == 1)
+    bool i_cache_disabled = false;
+    bool d_cache_disabled = false;
+
+    // Disable caches for testing.
+    if (SCB->CCR & (uint32_t)SCB_CCR_IC_Msk) {
+        SCB_DisableICache();
+        i_cache_disabled = true;
     }
-    for (uint32_t i = 0; i < size; i++) {
-        if (sdram[i] != pattern) {
-            return false; // Test failed
+
+    if (SCB->CCR & (uint32_t)SCB_CCR_DC_Msk) {
+        SCB_DisableDCache();
+        d_cache_disabled = true;
+    }
+    #endif
+
+    // Test data bus
+    for (uint32_t i = 0; i < MICROPY_HW_SDRAM_MEM_BUS_WIDTH; i++) {
+        *((volatile uint32_t *)mem_base) = (1 << i);
+        __DSB();
+        if (*((volatile uint32_t *)mem_base) != (1 << i)) {
+            #if MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR
+            snprintf(error_buffer, sizeof(error_buffer),
+                "Data bus test failed at 0x%p expected 0x%x found 0x%lx",
+                &mem_base[0], (1 << i), ((volatile uint32_t *)mem_base)[0]);
+            MICROPY_BOARD_FATAL_ERROR(error_buffer);
+            #endif
+            return false;
         }
     }
+
+    // Test address bus
+    for (uint32_t i = 1; i < MICROPY_HW_SDRAM_SIZE; i <<= 1) {
+        mem_base[i] = pattern;
+        __DSB();
+        if (mem_base[i] != pattern) {
+            #if MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR
+            snprintf(error_buffer, sizeof(error_buffer),
+                "Address bus test failed at 0x%p expected 0x%x found 0x%x",
+                &mem_base[i], pattern, mem_base[i]);
+            MICROPY_BOARD_FATAL_ERROR(error_buffer);
+            #endif
+            return false;
+        }
+    }
+
+    // Check for aliasing (overlapping addresses)
+    mem_base[0] = antipattern;
+    __DSB();
+    for (uint32_t i = 1; i < MICROPY_HW_SDRAM_SIZE; i <<= 1) {
+        if (mem_base[i] != pattern) {
+            #if MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR
+            snprintf(error_buffer, sizeof(error_buffer),
+                "Address bus overlap at 0x%p expected 0x%x found 0x%x",
+                &mem_base[i], pattern, mem_base[i]);
+            MICROPY_BOARD_FATAL_ERROR(error_buffer);
+            #endif
+            return false;
+        }
+    }
+
+    // Test all RAM cells
+    if (exhaustive) {
+        // Write all memory first then compare, so even if the cache
+        // is enabled, it's not just writing and reading from cache.
+        // Note: This test should also detect refresh rate issues.
+        for (uint32_t i = 0; i < MICROPY_HW_SDRAM_SIZE; i++) {
+            mem_base[i] = ((i % 2) ? pattern : antipattern);
+        }
+
+        for (uint32_t i = 0; i < MICROPY_HW_SDRAM_SIZE; i++) {
+            if (mem_base[i] != ((i % 2) ? pattern : antipattern)) {
+                #if MICROPY_HW_SDRAM_TEST_FAIL_ON_ERROR
+                snprintf(error_buffer, sizeof(error_buffer),
+                    "Address bus slow test failed at 0x%p expected 0x%x found 0x%x",
+                    &mem_base[i], ((i % 2) ? pattern : antipattern), mem_base[i]);
+                MICROPY_BOARD_FATAL_ERROR(error_buffer);
+                #endif
+                return false;
+            }
+        }
+    }
+
+    #if (__DCACHE_PRESENT == 1)
+    // Re-enable caches if they were enabled before the test started.
+    if (i_cache_disabled) {
+        SCB_EnableICache();
+    }
+
+    if (d_cache_disabled) {
+        SCB_EnableDCache();
+    }
+    #endif
+
     return true;
 }
 
